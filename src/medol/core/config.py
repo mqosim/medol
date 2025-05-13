@@ -1,6 +1,7 @@
 import os
 
 from dotenv import load_dotenv
+from minio import Minio
 
 load_dotenv()
 
@@ -38,6 +39,15 @@ class Settings:
             'algorithm': algorithm,
             'access_token_expire_minutes': access_token_expire_minutes
         }
+
+    @staticmethod
+    def get_minio_client() -> Minio:
+        return Minio(
+            endpoint=os.getenv("MINIO_ENDPOINT", "localhost:9000"),
+            access_key=os.getenv("MINIO_ACCESS_KEY", "minioadmin"),
+            secret_key=os.getenv("MINIO_SECRET_KEY", "minioadmin"),
+            secure=os.getenv("MINIO_SECURE", "False").lower() == "true"
+        )
 
 
 settings = Settings()

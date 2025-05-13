@@ -16,15 +16,18 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
-    avatar: str
+    avatar: Optional[str]
 
 
 class UserUpdate(BaseModel):
     name: Optional[str] = None
+    avatar: Optional[str] = None
+
 
 
 class UserOut(UserBase):
     id: int
     uuid: uuid.UUID
+    avatar: str
     created_at: datetime.datetime
     updated_at: datetime.datetime

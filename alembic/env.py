@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from src.medol.core.config import Settings
 from src.medol.models.base_model import Base
+from src.medol.models.user_model import User
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
