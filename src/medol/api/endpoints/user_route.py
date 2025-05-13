@@ -27,6 +27,14 @@ async def get_user(user_id: int, session: AsyncSession = Depends(get_async_sessi
 
     return UserOut.model_validate(user)
 
+@router.get("/{user_id}/avatar", status_code=status.HTTP_200_OK)
+async def get_avatar(user_id: int, session: AsyncSession = Depends(get_async_session)):
+    async with session.begin():
+        service = UserService(session)
+        avatar_url = service.get_avatar(user_id)
+
+    return avatar_url
+
 
 @router.get("/", response_model=PaginationResponse[UserOut], status_code=status.HTTP_200_OK)
 async def list_users(limit: int = Query(10, ge=1, le=100), offset: int = Query(0, ge=0), session: AsyncSession = Depends(get_async_session)) -> PaginationResponse[UserOut]:
