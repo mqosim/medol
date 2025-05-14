@@ -35,9 +35,9 @@ async def get_avatar(user_id: int, session: AsyncSession = Depends(get_async_ses
                      current_user: str = Depends(get_current_user)):
     async with session.begin():
         service = UserService(session)
-        avatar_url = service.get_avatar(user_id)
+        avatar_url = await service.get_avatar(user_id)
 
-    return avatar_url
+    return {"url": avatar_url}
 
 
 @router.get("/", response_model=PaginationResponse[UserOut], status_code=status.HTTP_200_OK)
