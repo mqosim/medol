@@ -13,4 +13,3 @@ class User(Base, TimestampMixin, UUIDMixin):
     email: Mapped[str] = mapped_column(unique=True, nullable=False)
     password: Mapped[Optional[str]]
     avatar: Mapped[Optional[str]]
-

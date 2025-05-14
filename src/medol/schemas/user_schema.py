@@ -16,7 +16,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
-    avatar: Optional[str]
+    avatar: Optional[str] = None
 
 
 class UserUpdate(BaseModel):
@@ -28,6 +28,10 @@ class UserUpdate(BaseModel):
 class UserOut(UserBase):
     id: int
     uuid: uuid.UUID
-    avatar: str
+    avatar: Optional[str]
     created_at: datetime.datetime
     updated_at: datetime.datetime
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
