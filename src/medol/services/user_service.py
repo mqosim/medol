@@ -13,16 +13,17 @@ from src.medol.services.file_service import FileService
 class UserService(BaseService[User, UserCreate, UserUpdate]):
     def __init__(self, session: AsyncSession):
         super().__init__(User, UserRepository(session), session)
+        self.file_service = get_file_service()
 
     async def create(self, data: UserCreate, unique_fields: list[str] | None = None) -> User:
         data.password = get_password_hash(data.password)
 
         return await super().create(data=data, unique_fields=unique_fields)
 
-    async def get_avatar(self, user_id: int, file_service: FileService = Depends(get_file_service)) -> str:
-        user = self.repo.get_by_id(user_id)
+    async def get_avatar(self, user_id: int)-> str:
+        user = await self.repo.get_by_id(user_id)
         file_path = user.avatar
 
-        avatar_url = file_service.get_file_url(file_path)
+        avatar_url = self.file_service.get_file_url(file_path)
 
         return avatar_url
